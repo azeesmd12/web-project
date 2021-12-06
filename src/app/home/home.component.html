@@ -1,0 +1,58 @@
+<input type="button" (click)="onLogout()" value='Logout'/>
+<div class="container">
+    <h2 class="text-uppercase text-center mb-5">Customer Details</h2>
+    <div class="card" style="border-radius: 15px;">
+        <div class="card-body p-5">
+            <form #submitForm="ngForm" (ngSubmit)="submitForm.valid && onSubmit(submitForm)">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFirstname">First Name</label>
+                        <input type="text" #firstname='ngModel' class="form-control" id="inputFirstname" 
+                        placeholder="First Name" [(ngModel)]="loan.firstname" name="first_name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputLastname">Last Name</label>
+                        <input type="text" #lastname='ngModel' class="form-control" id="inputLastname" 
+                        placeholder="Last Name" [(ngModel)]="loan.lastname" name="last_name">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputCity">Age</label>
+                    <input type="number" #age='ngModel' class="form-control" id="inputAge" 
+                    placeholder="Age" [(ngModel)]="loan.age" name="age">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputGender">Gender</label>
+                    <select id="inputGender" #gender='ngModel' class="form-control" [(ngModel)]="loan.gender" name="gender">
+                        <option selected>choose..</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputsalary">Salary</label>
+                    <input type="number" #salary='ngModel' class="form-control" id="inputsalary" 
+                    placeholder="Salary" [(ngModel)]="loan.salary" name="salary">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPreviousLoan">Previous Loan</label>
+                    <input type="number" #previousLoan='ngModel' class="form-control" id="inputPreviousLoan" 
+                    placeholder="Previous Loan Amount" [(ngModel)]="loan.previousLoan" name="previousLoan">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input type="submit" value="Submit"
+                      class="btn btn-primary">
+                </div>
+            </form>
+            <!-- Success message -->
+            <div class="success" *ngIf="successMessage" role="success">
+                Saved successfully
+              </div>
+  
+              <!-- Error message -->
+              <div class="alert" *ngIf="errorMessage" role="alert">
+                {{errorMessage}}
+              </div>
+        </div>
+    </div>
+</div>
