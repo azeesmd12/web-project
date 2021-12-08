@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 //other
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     LoginComponent,
     SignInComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

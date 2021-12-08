@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
     age :'',
     gender:'',
     salary:'',
+    loanAmount:'',
     previousLoan:'',
   }
   errorMessage : any;
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit {
     age :'',
     gender:'',
     salary:'',
+    loanAmount:'',
     previousLoan:'',
     };
     form.resetForm();

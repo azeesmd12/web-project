@@ -27,8 +27,13 @@ export class SignInComponent implements OnInit {
     this.loginService.loginUser(form.value).subscribe({
       next:(res:any) =>{
         this.loginService.storeToken(res['token']);
-        this.router.navigateByUrl('/home');
-        
+        let payload = this.loginService.getTokenPayload();
+        if(payload.role == 'user'){
+          this.router.navigateByUrl('/home/customer');
+        }
+        if(payload.role == 'admin'){
+          this.router.navigateByUrl('/home/admin');
+        }   
       },
       error:(err)=>{
           this.errorMessage = err.error.message;

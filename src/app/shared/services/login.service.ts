@@ -38,6 +38,16 @@ noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'}) };
     return this.http.post(environment.apiBaseUrl+'/customer/loan',customer);
   }
 
+  adminView(){
+    return this.http.get(environment.apiBaseUrl+'/admin/loan');
+  }
+  updateStatus(updatedStatus:any){
+      console.log(updatedStatus);
+      
+      return this.http.put(environment.apiBaseUrl+'/admin/loan/'+updatedStatus.id,updatedStatus);
+    
+  }
+
 
 //helper methods:
 

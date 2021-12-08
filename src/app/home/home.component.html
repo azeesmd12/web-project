@@ -25,14 +25,19 @@
                     <label for="inputGender">Gender</label>
                     <select id="inputGender" #gender='ngModel' class="form-control" [(ngModel)]="loan.gender" name="gender">
                         <option selected>choose..</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option>male</option>
+                        <option>female</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputsalary">Salary</label>
                     <input type="number" #salary='ngModel' class="form-control" id="inputsalary" 
                     placeholder="Salary" [(ngModel)]="loan.salary" name="salary">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputLoanAmount">Loan amount</label>
+                    <input type="number" #loanamount='ngModel' class="form-control" id="inputLoanAmount" 
+                    placeholder="Loan Amount" [(ngModel)]="loan.loanAmount" name="loan_amount">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputPreviousLoan">Previous Loan</label>
