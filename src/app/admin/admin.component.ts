@@ -12,6 +12,9 @@ export class AdminComponent implements OnInit {
 
   userData:any;
   successMessage:any;
+  updateBtn!:boolean;
+  editBtn:any;
+  record:any;
 
   constructor(private loginService:LoginService,private router:Router) { }
 
@@ -24,6 +27,7 @@ export class AdminComponent implements OnInit {
     this.loginService.adminView().subscribe({
       next:(res:any)=>{
        this.userData = res;
+       this.editBtn = true;
        console.log(this.userData)
       },
       error:(err)=>{
@@ -32,17 +36,32 @@ export class AdminComponent implements OnInit {
     })
   }
 
-  onSubmit(statusData:any){
+  onUpdate(statusData:any){
     this.loginService.updateStatus(statusData).subscribe({
       next:(res) =>{
         this.successMessage = res
         setTimeout(()=>this.successMessage ='',5000);
+        this.editBtn = true;
+        this.updateBtn = false; 
       },
       error:(err)=>{
-        err.error;
+        this.successMessage = err.error.message;
+        setTimeout(()=>this.successMessage ='',5000);
       }
     })
   }  
+
+  onEdit(item:any){
+       this.updateBtn = true;
+       this.editBtn = false;
+       this.record = item;
+  }
+
+  onCancel(){
+     this.editBtn =true;
+     this.updateBtn = false;
+  }
+
   onLogout(){
     this.loginService.deleteToken();
     this.router.navigateByUrl('/signin');

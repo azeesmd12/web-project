@@ -43,7 +43,6 @@ noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'}) };
   }
   updateStatus(updatedStatus:any){
       console.log(updatedStatus);
-      
       return this.http.put(environment.apiBaseUrl+'/admin/loan/'+updatedStatus.id,updatedStatus);
     
   }

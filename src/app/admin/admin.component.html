@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody *ngFor="let item of userData">
-            <tr>
+            <tr *ngIf="editBtn">
                 <td>{{item.id}}</td>
                 <td>{{item.first_name}}</td>
                 <td>{{item.last_name}}</td>
@@ -27,39 +27,48 @@
                 <td>{{item.loan_amount}}</td>
                 <td>{{item.balance}}</td>
                 <td>{{item.eligible_loan}}</td>
-                <td *ngIf="item.dispatched==true;else approve">
-                    {{item.approved_loan}}</td>
-                <ng-template #approve>
-                    <td>
-                        <input type="number" name="approved_loan" min="0" max="10000000" step="1" [(ngModel)]="item.approved_loan">
-                    </td>
-                </ng-template>
-                <div>
-                    <td *ngIf="item.dispatched==true;else dispatch">Yes</td>
-                    <ng-template #dispatch>
-                        <td>
-                            <select name="dispatched" [(ngModel)]="item.dispatched">
-                                <option disabled>Select</option>
-                                <option>Yes</option>
-                                <option selected>No</option>
-                            </select>
-                        </td>
-                    </ng-template>
+                <td>{{item.approved_loan}}</td>
+                <td *ngIf="item.dispatched;else dispatch">Yes</td>
+                <ng-template #dispatch><td>No</td></ng-template>
+                <td *ngIf="item.status;else status">{{item.status}}</td>
+                <ng-template #status><td>Inprogress</td></ng-template>
+                <div *ngIf="editBtn==true && item.dispatched==false">
+                    <input type="button" value="Edit" class="btn btn-primary btn-sm" (click)="onEdit(item)">
                 </div>
-                    <td *ngIf="item.dispatched==true;else status">{{item.status}}</td>   
-                <ng-template #status> 
-                    <td> 
-                        <select name="status" [(ngModel)]="item.status">
-                            <option selected>Select</option>
-                            <option>approved</option>
-                            <option>rejected</option>
-                     </select>&nbsp;
-                    </td>
-                    <input type="button" (click)="onSubmit(item)" value='update'class="btn btn-success"/>
-                </ng-template>     
             </tr>
         </tbody>
-        <input type="button" (click)="onLogout()" value='Logout' class="btn btn-primary"/>&nbsp;
+        <tbody *ngIf="updateBtn">
+            <tr>
+                <td>{{record.id}}</td>
+                <td>{{record.first_name}}</td>
+                <td>{{record.last_name}}</td>
+                <td>{{record.age}}</td>
+                <td>{{record.gender}}</td>
+                <td>{{record.salary}}</td>
+                <td>{{record.loan_amount}}</td>
+                <td>{{record.balance}}</td>
+                <td>{{record.eligible_loan}}</td>
+                <td><input type="number" min="1" max="1000000" [(ngModel)]="record.approved_loan" placeholder="{{record.approved_loan}}" [disabled]="record.status=='Approved'"></td>
+                <td>
+                    <select [(ngModel)]="record.dispatched">
+                        <option selected disabled hidden>select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </td>
+                <td>
+                    <select [(ngModel)]="record.status">
+                        <option selected disabled hidden>select</option>
+                        <option>Approved</option>
+                        <option>Rejected</option>
+                    </select> 
+                </td>
+            </tr>
+        </tbody>
+        <br/>
+        <button *ngIf="updateBtn" (click)="onUpdate(record)" class="btn btn-primary">Update</button>&nbsp;
+        <button *ngIf="updateBtn" (click)="onCancel()" class="btn btn-danger">Cancel</button>        
     </table>
+    {{successMessage}}
+    <input *ngIf="!updateBtn" type="button" (click)="onLogout()" value='Logout' class="btn btn-primary"/>
 </div>
-{{successMessage}}

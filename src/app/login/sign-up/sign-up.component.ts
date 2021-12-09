@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LoginService } from '../../shared/services/login.service';
 
@@ -15,7 +16,7 @@ export class SignUpComponent implements OnInit {
   errorMessage!: string;
 
 
-  constructor(public loginService : LoginService) { }
+  constructor(public loginService : LoginService,private router:Router) { }
 
   ngOnInit(): void {
     
@@ -27,7 +28,8 @@ export class SignUpComponent implements OnInit {
       next:() =>{
         this.showSuccessMessage =true ;
         setTimeout(()=>this.showSuccessMessage =false,4000);
-        this.resetForm(form)
+        this.resetForm(form);
+        this.router.navigateByUrl("/signin");
       },
       error:()=>{
           this.errorMessage = "somthing went wrong!";
