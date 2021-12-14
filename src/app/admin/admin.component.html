@@ -1,4 +1,6 @@
 <div class="table-responsive">
+    <h5>Customers Loan Details:</h5>
+    <form>
     <table class='table table-sm'>
         <thead>
             <tr class="table-secondary">
@@ -13,7 +15,7 @@
                 <th scope="col">Eligible Loan amt</th>
                 <th scope="col">Approved Loan</th>
                 <th scope="col">Loan Dispatched</th>
-                <th scope="col">Status</th>
+                <th scope="col" colspan="2">Status</th>
             </tr>
         </thead>
         <tbody *ngFor="let item of userData">
@@ -32,7 +34,7 @@
                 <ng-template #dispatch><td>No</td></ng-template>
                 <td *ngIf="item.status;else status">{{item.status}}</td>
                 <ng-template #status><td>Inprogress</td></ng-template>
-                <div *ngIf="editBtn==true && item.dispatched==false">
+                <div *ngIf="editBtn==true && item.dispatched=='' && item.status!='Rejected'">
                     <input type="button" value="Edit" class="btn btn-primary btn-sm" (click)="onEdit(item)">
                 </div>
             </tr>
@@ -48,27 +50,35 @@
                 <td>{{record.loan_amount}}</td>
                 <td>{{record.balance}}</td>
                 <td>{{record.eligible_loan}}</td>
-                <td><input type="number" min="1" max="1000000" [(ngModel)]="record.approved_loan" placeholder="{{record.approved_loan}}" [disabled]="record.status=='Approved'"></td>
+                <td *ngIf="record.status=='Approved';else changeInput"><input type="text" size="10px" [(ngModel)]="record.approved_loan" name="approved_loan" required></td>
+                <ng-template #changeInput>
+                    <td><input type="text" size="10px" name="approved_loan" [disabled]="record.status=='Rejected'" value="0" required></td> 
+                </ng-template>
                 <td>
-                    <select [(ngModel)]="record.dispatched">
+                    <select [(ngModel)]="record.dispatched" name="dispatched" [disabled]="record.status=='Rejected'">
                         <option selected disabled hidden>select</option>
-                        <option>Yes</option>
+                        <option *ngIf="record.status=='Approved'">Yes</option>
                         <option>No</option>
                     </select>
                 </td>
-                <td>
-                    <select [(ngModel)]="record.status">
-                        <option selected disabled hidden>select</option>
+                <td colspan="2">
+                    <select [(ngModel)]="record.status" name="status">
+                        <option selected hidden>select</option>
                         <option>Approved</option>
                         <option>Rejected</option>
                     </select> 
                 </td>
             </tr>
         </tbody>
-        <br/>
-        <button *ngIf="updateBtn" (click)="onUpdate(record)" class="btn btn-primary">Update</button>&nbsp;
-        <button *ngIf="updateBtn" (click)="onCancel()" class="btn btn-danger">Cancel</button>        
+        <br/>        
     </table>
-    {{successMessage}}
+    <div *ngIf="updateBtn">
+        <button 
+        (click)="onUpdate(record)" class="btn btn-primary btn-sm" name="updateBtn">Update</button>
+        <button (click)="onCancel()" class="btn btn-danger btn-sm">Cancel</button>
+    </div>
+</form>     
     <input *ngIf="!updateBtn" type="button" (click)="onLogout()" value='Logout' class="btn btn-primary"/>
 </div>
+<p style="color:green;">{{successMessage}}</p>
+<p style="color:red;">{{errorMessage}}</p>

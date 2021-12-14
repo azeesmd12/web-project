@@ -12,9 +12,11 @@ export class AdminComponent implements OnInit {
 
   userData:any;
   successMessage:any;
+  errorMessage:any;
   updateBtn!:boolean;
   editBtn:any;
   record:any;
+  approved_loan:any;
 
   constructor(private loginService:LoginService,private router:Router) { }
 
@@ -38,28 +40,32 @@ export class AdminComponent implements OnInit {
 
   onUpdate(statusData:any){
     this.loginService.updateStatus(statusData).subscribe({
-      next:(res) =>{
+      next:(res:any) =>{
         this.successMessage = res
-        setTimeout(()=>this.successMessage ='',5000);
+        setTimeout(()=>this.successMessage ='',4000);
         this.editBtn = true;
         this.updateBtn = false; 
+        this.getUserData();
       },
-      error:(err)=>{
-        this.successMessage = err.error.message;
-        setTimeout(()=>this.successMessage ='',5000);
+      error:(err:any)=>{
+        this.errorMessage = err.error.message
+        setTimeout(()=>this.errorMessage ='',6000);
       }
     })
   }  
 
   onEdit(item:any){
+       this.record = item;
        this.updateBtn = true;
        this.editBtn = false;
-       this.record = item;
+       
   }
 
   onCancel(){
+    this.updateBtn = false;
      this.editBtn =true;
-     this.updateBtn = false;
+     this.getUserData();
+     
   }
 
   onLogout(){

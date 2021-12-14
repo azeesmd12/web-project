@@ -1,0 +1,14 @@
+th, td {
+    border: 1px solid black;
+  }
+.table>:not(:first-child) {
+    border-top: 0px solid currentColor;
+}
+#addCus{
+    position: relative;
+    top:30px;
+    left:-50px;
+}
+#customerTable{
+    padding-top: 40px;
+}

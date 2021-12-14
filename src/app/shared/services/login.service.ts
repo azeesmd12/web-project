@@ -33,7 +33,8 @@ noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'}) };
     return this.http.post(environment.apiBaseUrl+'/login',signin,this.noAuthHeader);
   }
 
-  createCustomer(customer:any){
+  createCustomer(customer:any,userDetails:any){
+    customer.emp_id = userDetails.userid;
     console.log("customer",customer);
     return this.http.post(environment.apiBaseUrl+'/customer/loan',customer);
   }
@@ -42,9 +43,22 @@ noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'}) };
     return this.http.get(environment.apiBaseUrl+'/admin/loan');
   }
   updateStatus(updatedStatus:any){
+
+     if(updatedStatus.status=="Rejected"){
+       updatedStatus.approved_loan = 0;
+       updatedStatus.dispatched = false;
+       console.log(updatedStatus);
+       return this.http.put(environment.apiBaseUrl+'/admin/loan/'+updatedStatus.id,updatedStatus);
+     }
+     else{
       console.log(updatedStatus);
       return this.http.put(environment.apiBaseUrl+'/admin/loan/'+updatedStatus.id,updatedStatus);
-    
+     } 
+  }
+  getCustomerLoanStatus(userId:any){
+
+    return this.http.get(environment.apiBaseUrl+'/user/loan/'+userId);
+
   }
 
 
